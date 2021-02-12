@@ -8,28 +8,56 @@
 
 This page explains, through an example, how to embed a ThoughtSpot Pinboard in your Web page, portal, or application.
 
-=== Import the SDK Library
+=== Import the pinboardEmbed Package
+
+Import the pinboardEmbed SDK package to your application environment:
 
 [source,javascript]
 ----
-<add codeblock>
+// Import PinboardEmbed package
+
+import { init, PinboardEmbed} from "ts-embed-sdk";
 ----
 
-=== Initialize the SDK
+=== Initialize
 
+To allow your client application to connect to ThoughtSpot:
+
+. Construct the URL with ThoughtSpot hostname or IP address.
+. Specify the authentication method to use for authenticating application users.
++
 [source,javascript]
 ----
-<add codeblock>
+init
+    ({
+        thoughtSpotHost:"https://10.87.90.166",
+        authType: "SSO"
+    });
 ----
-=== Construct the embed content
++
+authType::
+[horizontal]
+SSO::
+Uses SAML SSO authentication method.
+AuthServer::
+Uses token-based service and trusted authentication for granting access to embedded content.
+
+=== Create an instance of the pinboard object
  
 [source,JavaScript]
 ----
- var protocol = "THOUGHTSPOT_PROTOCOL";
- var hostPort = "HOST_PORT";
+const embed = new PinboardEmbed("#embed", {
+  frameParams: {
+    width: 1280,
+    height: 720
+  },
  
- var pinboardId = "PINBOARD_ID";
+});
+
 ----
+
+
+
 
 . Edit each variable in the section and replace it with the IDs you copied from the pinboard.
 
@@ -55,7 +83,153 @@ This is a link copied from an individual visualization, the result in the file i
 
 <Add information on events>
  
+ 
+ This topic provides instructions for embedding the ThoughtSpot search function. The embedded Search API enables external applications to search for data from one or several data sources.  
+
+////
+
+When using it, you can access data stored in ThoughtSpot directly.
+You do not have to save a search result to a pinboard and then reference it using the visualization's URL.
+
+////
+
+
+
+
+
+=== Create an instance of the search object
+Create an instance of the SearchEmbed object and customize your search page view.
+
+[source,javascript]
+----
+ const tsSearch = new SearchEmbed("#embed", {
+    frameParams: {},
+        collapseDataSources:false,
+        hideDataSources: true,
+        hideResults: false,
+        enableSearchAssist: true,
+        disabledActions: [],
+ });
+
+----
+==== Search Page UI Attributes
+collapseDataSources::
+_Boolean_. Collapses the list of data sources on the Data Source panel.
+ hideDataSources::
+_Boolean_. Hides the Data Source panel. 
+hideResults:: 
+_boolean_. Hides charts and tables in search answers.
+enableSearchAssist:: 
+_Boolean_. Enables search assistance.
+disabledActions:: 
+_string_. Disables the specified contextual menu item from the list of actions available for search insights page.
+disabledActionReason::
+_string_. Indicates the reason for disabling an action from the search answer  visualizations page view.
+
+=== Construct the URL of the embedded search object
+Construct the URL of the embedded ThoughtSpot search object to load in the iframe.
+[source, javascript] 
+----
+<add code block>
+----
+=== Subscribe to events
+Register event handlers to subscribe to events triggered by the ThoughtSpot Search function:
+[source, javascript] 
+----
+ .on("init", showLoader)
+	.on("load", hideLoader)
+	.on("answerPageLoading", payload =>
+		console.log("message received from embedded view" + JSON.stringify(payload))
+
+		// Show/hide a loader while iframe is loading
+		function showLoader() {
+			document.getElementById("loader").style.display = "block";
+		}
+
+		function hideLoader() {
+			document.getElementById("loader").style.display = "none";
+		}
+----
+=== Render the embedded search
+Render the embedded search and pass the data source ID. 
+[source, javascript] 
+----
+ .render
+	   ({
+			dataSources,
+			searchQuery,
+			answerId,
+		}:
+
+		SearchRenderOptions = {}): SearchEmbed {
+		super.render();
+
+		const src = this.getIFrameSrc(answerId, dataSources, searchQuery);
+		this.renderIFrame(src, this.viewConfig.frameParams);
+
+		return this;
+	    }
+----
+
+=== Run a search query
+////
+Now when a user searches, the <iframe> sends data to the subscription.
+The parent web page or application receives the data as JSON, and can do whatever you want with it.
+
+. You can set up your web page or application to display or otherwise act on the data it receives from the subscription.
+
+////
+To verify the integration, perform the following tasks:
+
+* Load the client application. 
+* Use a search string to search for data.
+* Verify if the page view parameters, such as hiding or showing the data source panel function as you configured.
+* If you have disabled a menu item from the search visualizations page, verify if the menu command is disabled.
+
 
 === Verify the embed connection
 <Add steps to test visualization embedding>
 
+
+
+----
+// Import ThoughtSpot SDK
+import { init, PinboardEmbed } from "ts-embed-sdk";
+import "./styles.css";
+
+// Initialize embed configuration
+init({
+  thoughtSpotHost:
+    /*param-start-hosturl*/"https://10.87.90.166"/*param-end-hosturl*/,
+  authType: "SSO"
+});
+
+// Instantiate class for embedding a pinboard
+const embed = new PinboardEmbed("#embed", {
+  frameParams: {
+    width: 1280,
+    height: 720
+  },
+  /*param-start-modifyActions*//*param-end-modifyActions*/
+});
+
+embed
+  // Register event listeners
+  .on("init", showLoader)
+  .on("load", hideLoader)
+  // Render pinboard with UUID
+  .render({
+      /*param-start-pinboardId*/pinboardId: "976bb48e-b1e0-4621-a7da-51161cef4b29",/*param-end-pinboardId*/
+      /*param-start-runtimeFilters*//*param-end-runtimeFilters*/
+  });
+
+// Functions to show and hide a loader while iframe loads
+function showLoader() {
+  document.getElementById("loader").style.display = "block";
+}
+function hideLoader() {
+  document.getElementById("loader").style.display = "none";
+}
+
+
+----
