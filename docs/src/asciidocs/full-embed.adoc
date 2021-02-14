@@ -18,7 +18,7 @@ Full embedded ThoughtSpot content gives your users the ability to perform many e
 * relate uploaded data to existing worksheets
 
 === Limitations
-Users in a fully  embedded applications cannot perform the following tasks:
+Users in a fully  embedded application cannot perform the following tasks:
 
 * create worksheets or views
 * modify profiles
@@ -40,7 +40,7 @@ Safari on iOS
 === Error messages and full embed
 
 In ThoughtSpot, you can disable error messages within the ThoughtSpot `iframe`.
-We provide APIs so you can access error messages and display them in your application's UI appropriately.
+We provide APIs so you can access error messages and display them in your application UI appropriately.
 
 This approach suppressing error messages inside the `<iframe>`, and uses the `window.postMessage` function to passes them through to the parent application, which acts as the listener.
 
@@ -90,12 +90,12 @@ authType::
 SSO::
 SAML SSO authentication method. Users accessing the embedded content are authenticated with SAML SSO. 
 AuthServer::
-Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens to grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
+Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens and grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
 +
 authEndpoint::
 _String_. The endpoint URL of the authentication server.
 None::
-Requires no authentication. The user must already be logged into ThoughtSpot before interacting with the embedded content.
+Requires no authentication. The user must already be logged in to ThoughtSpot before interacting with the embedded content.
 +
 This approach is used only for testing client applications. Do not use this in production environments.
 
@@ -175,7 +175,7 @@ The data source for searching data is selected.
 To verify the ThoughtSpot application integration, perform the following tasks:
 
 * Load your application. 
-* Verify if the the page you set as the active tab opens when you load the application.
+* Verify if the page you set as the active tab opens when you load the application.
 * Verify if the tabs are displayed correctly.
 * Verify if the page view parameters, such as hiding or showing the data source panel, function as expected.
 * If you have disabled a menu item from the search visualizations page, verify if the menu command is disabled.
@@ -211,11 +211,12 @@ Here are some additional notes about the full embed feature:
 * Call `thoughtspot.<customerURL>.com/#/pinboards` and use that to access saved pinboards.
 * Use SAML for authentication against ThoughtSpot within the `<iframe>`.
 
+The function `updateIframeUrl(id)` contains the logic to change the src URL of the `<iframe>` when your users click  navigation buttons.
 ////
 
 === Code sample
 <To be added>
-The function `updateIframeUrl(id)` contains the logic to change the src URL of the `<iframe>` when your users click  navigation buttons.
+
 ////
 == Showing applications in a full screen
 

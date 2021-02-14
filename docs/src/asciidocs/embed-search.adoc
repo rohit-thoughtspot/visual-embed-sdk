@@ -48,7 +48,7 @@ authType::
 SSO::
 SAML SSO authentication method. Users accessing the embedded content are authenticated with SAML SSO.
 AuthServer::
-Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens to grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
+Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens and grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
 +
 authEndpoint::
 _String_. The endpoint URL of the authentication server.

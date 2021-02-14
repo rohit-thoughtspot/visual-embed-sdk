@@ -5,7 +5,7 @@
 :page-pageid: embed-a-viz
 :page-description: Embed charts and tables
 
-This page explains how to embed a ThoughtSpot visualization, such as tables and charts in your Web page, portal, or application.
+This page explains how to embed a ThoughtSpot visualization, such as tables and charts, in your Web page, portal, or application.
 ////
 To build this sample, you must have access to a text editor and a ThoughtSpot instance with a visualization.
 Experience working with Javascript also helps.
@@ -52,11 +52,11 @@ authType::
 SSO::
 Enables SAML SSO authentication method.
 AuthServer::
-Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens to grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
+Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens and grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
 authEndpoint::
 _String_. The endpoint URL of the authentication server.
 None::
-Requires no authentication. The user must already be logged into ThoughtSpot before interacting with the embedded content.
+Requires no authentication. The user must already be logged in to ThoughtSpot before interacting with the embedded content.
 +
 This approach is used only for testing client applications. Do not use this in production environments.
 
@@ -112,7 +112,7 @@ _String_. The GUID of the pinboard to which the visualization is pinned.
 runtimeFilters [small]_optional_::
 Runtime filters to be applied when the embedded visualization loads.
 + 
-Runtime filters provide the ability to filter data at the time of retrieval. Runtime filters allow you to apply a filter to a visualization by passing filter specifications in the URL query parameters. 
+Runtime filters provide the ability to filter data at the time of retrieval. Runtime filters allow you to apply a filter to a visualization and pass filter specifications in the URL query parameters. 
 +
 For example, to sort values equal to `red` in the `Color` column for a visualization, you can pass the runtime filter in the URL query parameters as shown here:
 +

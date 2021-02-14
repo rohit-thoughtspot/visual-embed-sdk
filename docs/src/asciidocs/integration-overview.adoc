@@ -66,10 +66,12 @@ SAML SSO::
 To provide a seamless login experience, you can configure SSO and enable SAML authentication, so that the federated users are automatically authenticated to ThoughtSpot. 
 With SSO, you can use your host application or an external service as the identity provider and allow authenticated users to access the ThoughtSpot service.
 ThoughtSpot administrators can set up SAML SSO either using the TSCLI command line or the Admin console in the ThoughtSpot application.
-For more information, see link://https://cloud-docs.thoughtspot.com/admin/ts-cloud/authentication-integration.html?ss360SearchTerm=saml[Managing authentication with SAML].
++
+For more information, see xref:configure-saml.adoc[Configure SAML].
 Trusted Authentication::
 Trusted authentication is a token-based authentication service that uses a central authentication service to authenticate ThoughtSpot users. In a trusted authentication workflow, ThoughtSpot provides the authentication service with a token for a given ThoughtSpot user. This token is used for obtaining trust from the third-party client applications to provide access to ThoughtSpot features.
-For more information on trusted authentication, see <add reference>.
++
+For more information, see xref:trusted-authentication.adoc[Configure trusted authentication].
 
 == Define security settings
 Collecting user credentials from one application (domain) and sending them to another application (such as ThoughtSpot) can present security vulnerabilities. Cross-origin or cross-domain verification prevents such security risks.

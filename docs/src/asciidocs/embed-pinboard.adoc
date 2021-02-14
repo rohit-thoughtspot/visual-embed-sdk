@@ -53,7 +53,7 @@ authType::
 SSO::
 Enables SAML SSO authentication method.
 AuthServer::
-Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens to grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
+Trusted authentication method. The trusted authentication method enables applications to exchange secure tokens and grant access to the embedded content. If this authentication method is used, define the `authEndpoint`  attribute.
 authEndpoint::
 _String_. The endpoint URL of the authentication server.
 None::
@@ -115,7 +115,7 @@ _String_. The Global Unique Identifier (GUID) of the visualizations added to the
 runtimeFilters [small]_optional_::
 Runtime filters to be applied when the Pinboard page loads.
 + 
-Runtime filters provide the ability to filter data at the time of retrieval. Runtime filters allow you to apply a filter to a visualization in a pinboard by passing filter specifications in the URL query parameters. 
+Runtime filters provide the ability to filter data at the time of retrieval. Runtime filters allow you to apply a filter to a visualization in a pinboard and pass filter specifications in the URL query parameters. 
 +
 For example, to sort values equal to `red` in the `Color` column for a visualization in a pinboard, you can pass the runtime filter in the URL query parameters as shown here:
 +
