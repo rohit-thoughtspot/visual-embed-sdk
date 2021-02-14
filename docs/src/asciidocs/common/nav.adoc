@@ -3,7 +3,7 @@
 :page-description: Main navigation
 
 * xref:docs:intro-embed.adoc[Embedded Analytics with ThoughtSpot]
-** xref:docs:ingration-overview.adoc[Integration guidelines]
+** xref:docs:integration-overview.adoc[Integration guidelines]
 ** xref:docs:spotdev-portal.adoc[SpotDev Portal]
 ** Authentication
 *** xref:docs:configure-saml.adoc[Configure SAML SSO]
@@ -13,9 +13,9 @@
 * xref:docs:visual-embed-sdk.adoc[Visual Embed SDK]
 ** xref:docs:getting-started.adoc[Get Started]
 ** xref:docs:embed-search.adoc[Embed search]
-** xref:docs:embed-a-viz.adoc[Embed Visualizations]
-** xref:docs:embed-pinboard.adoc[Embed Pinboards]
-** xref:docs:full-embed.adoc[Embed Full Application]
+** xref:docs:embed-a-viz.adoc[Embed visualizations]
+** xref:docs:embed-pinboard.adoc[Embed pinboards]
+** xref:docs:full-embed.adoc[Embed full application]
 ** Error Handling
 
 * xref:docs:js-reference.adoc[SDK Reference]
