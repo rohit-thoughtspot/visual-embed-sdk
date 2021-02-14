@@ -67,7 +67,7 @@ Hides the default data source. You can use your worksheet as a data source from 
 Hide chart or table::
 Hides the visualizations displayed as search results. 
 Modify available actions::
-Defines a list of actions to be disabled from the *Actions* menu (*...*) on the search results page.  
+Defines a list of actions to be disabled on the search answers page.  
 Enable Search Assist::
 Enables the Search Assist feature that helps users with simple search scenarios. Search Assist allows you to create a custom onboarding experience for your users by demonstrating how to search data from the example queries created on your worksheet. 
 Add search tokens::
@@ -85,7 +85,7 @@ To explore the API for embedding visualizations:
 
 ==== User experience settings
 Modify available actions::
-Defines a list of actions to be disabled from the *Actions* menu (*...*) on the visualizations page.  
+Defines a list of actions to be disabled on the visualizations page.  
 Set runtime filters::
 Sets filters that will be applied to the visualization.
 
@@ -104,7 +104,7 @@ Hide filter bar::
 Hides the pinboard filters.
 Modify available actions
 Modify available actions::
-Defines a list of actions to be disabled from the *Actions* menu (*...*) on the *Pinboards* page, and each of the visualizations in the *Pinboards* page.  
+Defines a list of actions to be disabled on the *Pinboards* page, and each of the visualizations in the *Pinboards* page.  
 Set runtime filters::
 Sets filters that will be applied to the visualization.
 

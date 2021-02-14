@@ -13,7 +13,7 @@
 * xref:docs:visual-embed-sdk.adoc[Visual Embed SDK]
 ** xref:docs:getting-started.adoc[Get Started]
 ** xref:docs:embed-search.adoc[Embed search]
-** xref:docs:embed-a-viz.adoc[Embed Visualizations (Charts and Tables)]
+** xref:docs:embed-a-viz.adoc[Embed Visualizations]
 ** xref:docs:embed-pinboard.adoc[Embed Pinboards]
 ** xref:docs:full-embed.adoc[Embed Full Application]
 ** Error Handling
@@ -35,12 +35,12 @@
 ** xref:docs:customize-style.adoc[Customize the application style]
 
 ** Configure Actions 
-
+////
 * xref:docs:glossary.adoc[Glossary]
 
 * Frequently asked questions
-
----
+////
+---ß
 * Resources
 ** link://https://cloud-docs.thoughtspot.com[ThoughtSpot Documentation]
 ** Community

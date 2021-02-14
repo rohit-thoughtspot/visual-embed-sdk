@@ -7,7 +7,7 @@
 
 The ThoughtSpot Visual Embed SDK is a JavaScript library that enables you to embed ThoughtSpot components in web pages. The library provides modularized packages for embedding ThoughtSpot functions such as search, visualizations, pinboards, and the full ThoughtSpot application.
 
-This section lists the tasks that you need to complete to get started with embedding ThoughtSpot content.
+This section lists the tasks you need to complete before embedding ThoughtSpot content in your applications.
 
 == Prerequisites
 
@@ -26,15 +26,16 @@ The Visual Embed SDK is available for installation as a Node Package Manager (NP
 If NPM is not installed, link:https://www.npmjs.com/get-npm[install NPM].
 
 == Install the Visual Embed SDK
-The preferred way to install the Visual Embed SDK is to use npm, the Node.js package manager. 
-To do so, type this at the command line:
+The latest version of the Visual Embed SDK is available at link://www.npmjs.com/package/ts-embed-sdk[https://www.npmjs.com/package/ts-embed-sdk].
+
+To install the SDK, run the following command at the command line:
 [source,shell]
 ----
 npm install ts-embed-sdk
 ----
 == Import the JavaScript library
 
-In your .html page, include the JavaScript file in the `<script>` tag of your `.html` page:
+In your .html page, include the JavaScript file in the `<script>` tag under `<head>`:
 [source,html]
 ----
 <script type="text/javascript" src="<file-location>/<file-name>.js"></script>
