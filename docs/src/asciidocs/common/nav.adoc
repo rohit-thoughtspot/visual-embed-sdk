@@ -2,7 +2,6 @@
 :page-pageid: nav
 :page-description: Main navigation
 
-ts7-docs
 * xref:docs:intro-embed.adoc[Embedded Analytics with ThoughtSpot]
 ** xref:docs:integration-overview.adoc[Integration guidelines]
 ** xref:docs:spotdev-portal.adoc[SpotDev Portal]
@@ -32,28 +31,17 @@ ts7-docs
 ** xref:docs:group-api.adoc[Group API]
 ** xref:docs:search-data-api.adoc[Search Data API]
 ** xref:docs:rest-api-reference.adoc[API Reference Guide]
-=======
 
----
-
- main
 * Customization Settings
-** link:{{navprefix}}=customize-style[Customize the application style]
-
+** xref:docs:customize-style.adoc[Customize the application style]
 ** Configure Actions 
- ts7-docs
+
 ////
 * xref:docs:glossary.adoc[Glossary]
-=======
-
----
-
-* link:{{navprefix}}=glossary[Glossary]
-main
 
 * Frequently asked questions
 ////
----ß
+
 * Resources
 ** link://https://cloud-docs.thoughtspot.com[ThoughtSpot Documentation]
 ** Community
