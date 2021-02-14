@@ -4,7 +4,6 @@ import { Action, AuthType } from '../types';
 import * as utils from '../utils';
 import { getDocumentBody, getIFrameSrc, getRootEl } from '../test/test-utils';
 
-const mockEmbedId = '123';
 const defaultViewConfig = {
     frameParams: {
         width: 1280,
@@ -13,8 +12,6 @@ const defaultViewConfig = {
 };
 const answerId = 'eca215d4-0d2c-4a55-90e3-d81ef6848ae0';
 const thoughtSpotHost = 'tshost';
-
-jest.spyOn(utils, 'id').mockImplementation(() => mockEmbedId);
 
 beforeAll(() => {
     init({
@@ -32,7 +29,7 @@ describe('Search embed tests', () => {
         const searchEmbed = new SearchEmbed(getRootEl(), {});
         searchEmbed.render();
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/answer?dataSourceMode=expand`,
+            `http://${thoughtSpotHost}/v2/#/embed/answer?dataSourceMode=expand`,
         );
     });
 
@@ -43,7 +40,7 @@ describe('Search embed tests', () => {
             dataSources,
         });
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/answer?dataSources=[%22data-source-1%22]&dataSourceMode=expand`,
+            `http://${thoughtSpotHost}/v2/#/embed/answer?dataSources=[%22data-source-1%22]&dataSourceMode=expand`,
         );
     });
 
@@ -55,7 +52,7 @@ describe('Search embed tests', () => {
             searchQuery: '[commit date][revenue]',
         });
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=expand`,
+            `http://${thoughtSpotHost}/v2/#/embed/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=expand`,
         );
     });
 
@@ -70,7 +67,7 @@ describe('Search embed tests', () => {
             searchQuery: '[commit date][revenue]',
         });
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=collapse`,
+            `http://${thoughtSpotHost}/v2/#/embed/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=collapse`,
         );
     });
 
@@ -85,11 +82,10 @@ describe('Search embed tests', () => {
             searchQuery: '[commit date][revenue]',
         });
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=hide`,
+            `http://${thoughtSpotHost}/v2/#/embed/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=hide`,
         );
     });
 
-    // TODO: enable test after implementation is done
     test('should disable actions', () => {
         const searchEmbed = new SearchEmbed(getRootEl(), {
             ...defaultViewConfig,
@@ -102,7 +98,50 @@ describe('Search embed tests', () => {
             searchQuery: '[commit date][revenue]',
         });
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&dataSourceMode=expand`,
+            `http://${thoughtSpotHost}/v2/#/embed/answer?dataSources=[%22data-source-1%22]&searchQuery=[commit%20date][revenue]&disableAction=download,edit&disableHint=Permission%20denied&dataSourceMode=expand`,
+        );
+    });
+
+    test('should enable search assist', () => {
+        const searchEmbed = new SearchEmbed(getRootEl(), {
+            ...defaultViewConfig,
+            enableSearchAssist: true,
+        });
+        searchEmbed.render({});
+        expect(getIFrameSrc()).toBe(
+            `http://${thoughtSpotHost}/v2/#/embed/answer?enableSearchAssist=true&dataSourceMode=expand`,
+        );
+    });
+
+    test('should hide actions', () => {
+        const searchEmbed = new SearchEmbed(getRootEl(), {
+            hiddenActions: [
+                Action.DownloadAsCsv,
+                Action.DownloadAsPdf,
+                Action.DownloadAsXlsx,
+            ],
+            ...defaultViewConfig,
+        });
+        searchEmbed.render({
+            answerId,
+        });
+        expect(getIFrameSrc()).toBe(
+            `http://${thoughtSpotHost}/v2/#/embed/saved-answer/${answerId}?hideAction=downloadAsCSV,downloadAsPdf,downloadAsXLSX&dataSourceMode=expand`,
+        );
+    });
+
+    test('should disable and hide actions', () => {
+        const searchEmbed = new SearchEmbed(getRootEl(), {
+            disabledActions: [Action.DownloadAsXlsx],
+            hiddenActions: [Action.DownloadAsCsv],
+            disabledActionReason: 'Access denied',
+            ...defaultViewConfig,
+        });
+        searchEmbed.render({
+            answerId,
+        });
+        expect(getIFrameSrc()).toBe(
+            `http://${thoughtSpotHost}/v2/#/embed/saved-answer/${answerId}?disableAction=downloadAsXLSX&disableHint=Access%20denied&hideAction=downloadAsCSV&dataSourceMode=expand`,
         );
     });
 
@@ -112,7 +151,7 @@ describe('Search embed tests', () => {
             answerId,
         });
         expect(getIFrameSrc()).toBe(
-            `http://${thoughtSpotHost}/v2/#/embed/${mockEmbedId}/saved-answer/${answerId}?dataSourceMode=expand`,
+            `http://${thoughtSpotHost}/v2/#/embed/saved-answer/${answerId}?dataSourceMode=expand`,
         );
     });
 });

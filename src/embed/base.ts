@@ -21,13 +21,7 @@ import {
     GenericCallbackFn,
     MessageCallback,
 } from '../types';
-import { id } from '../utils';
-import {
-    getCurrentData,
-    initialize,
-    subscribeToAlerts,
-    subscribeToData,
-} from '../v1/api';
+import { initialize } from '../v1/api';
 
 let config = {} as EmbedConfig;
 
@@ -57,13 +51,10 @@ export interface ViewConfig {
 
 /**
  * Base class for embedding v2 experience
+ * Note: the v2 version of ThoughtSpot Blink is built on the new stack:
+ * React+GraphQL
  */
 export class TsEmbed {
-    /**
-     * The identifier for the instance
-     */
-    private id: string;
-
     /**
      * The DOM node where the ThoughtSpot app is to be embedded
      */
@@ -73,7 +64,12 @@ export class TsEmbed {
      * A reference to the iframe within which the ThoughtSpot app
      * will be rendered
      */
-    private iFrame: HTMLIFrameElement;
+    protected iFrame: HTMLIFrameElement;
+
+    /**
+     * The ThoughtSpot host name or IP address
+     */
+    protected thoughtSpotHost: string;
 
     /**
      * A map of event handlers for particular message types triggered
@@ -83,18 +79,12 @@ export class TsEmbed {
     private eventHandlerMap: Map<string, MessageCallback[]>;
 
     /**
-     * The ThoughtSpot host name or IP address
-     */
-    private thoughtSpotHost: string;
-
-    /**
      * A flag that is set to true post render
      */
     private isRendered: boolean;
 
     constructor(domSelector: DOMSelector) {
         this.el = this.getDOMNode(domSelector);
-        this.id = id();
         // TODO: handle error
         this.thoughtSpotHost = getThoughtSpotHost(config);
         this.eventHandlerMap = new Map();
@@ -119,6 +109,14 @@ export class TsEmbed {
     }
 
     /**
+     * Extract the type field from the event payload
+     * @param event The window message event
+     */
+    protected getEventType(event: MessageEvent) {
+        return event.data?.type;
+    }
+
+    /**
      * Add an global event listener to window for "message" events
      * We detect if a particular event is targeted to this particular
      * embed instance through an identifier contained in the payload,
@@ -126,9 +124,8 @@ export class TsEmbed {
      */
     private subscribeToEvents() {
         window.addEventListener('message', (event) => {
-            const eventType = event.data?.type;
-            const embedId = event.data?.embedId;
-            if (embedId === this.getId()) {
+            const eventType = this.getEventType(event);
+            if (event.source === this.iFrame.contentWindow) {
                 this.executeCallbacks(eventType, event.data);
             }
         });
@@ -138,7 +135,7 @@ export class TsEmbed {
      * Construct the base URL string to load the ThoughtSpot app
      */
     protected getEmbedBasePath(): string {
-        return `${this.thoughtSpotHost}/v2/#/embed/${this.getId()}`;
+        return `${this.thoughtSpotHost}/v2/#/embed`;
     }
 
     /**
@@ -150,10 +147,15 @@ export class TsEmbed {
      */
     protected getV1EmbedBasePath(
         queryString: string,
+        hidePrimaryNavbar = true,
         isAppEmbed = false,
     ): string {
         const queryStringFrag = queryString ? `&${queryString}` : '';
-        let path = `${this.thoughtSpotHost}/?embedApp=true${queryStringFrag}#`;
+        const primaryNavParam = `&primaryNavHidden=${hidePrimaryNavbar}`;
+        const queryParams = `?embedApp=true${
+            isAppEmbed ? primaryNavParam : ''
+        }${queryStringFrag}`;
+        let path = `${this.thoughtSpotHost}/${queryParams}#`;
         if (!isAppEmbed) {
             path = `${path}/embed`;
         }
@@ -199,6 +201,14 @@ export class TsEmbed {
     }
 
     /**
+     * Set the height of the iframe
+     * @param height The height in pixels
+     */
+    protected setIFrameHeight(height: number): void {
+        this.iFrame.style.height = `${height}px`;
+    }
+
+    /**
      * Execute all registered event handlers for a particular event type
      * @param eventType The event type
      * @param data The payload the event handler will be invoked with
@@ -209,13 +219,6 @@ export class TsEmbed {
     ): void {
         const callbacks = this.eventHandlerMap.get(eventType) || [];
         callbacks.forEach((callback) => callback(data));
-    }
-
-    /**
-     * Return the identifier for this instance
-     */
-    public getId(): string {
-        return this.id;
     }
 
     /**
@@ -265,13 +268,29 @@ export class TsEmbed {
         return this;
     }
 
+    /**
+     * Mark the ThoughtSpot object to have been rendered
+     * Needs to be overridden by subclasses to do the actual
+     * rendering of the iframe.
+     * @param args
+     */
     public render(...args: any[]): void {
         this.isRendered = true;
     }
 }
 
 /**
- * Base class for embedding legacy v1 experience
+ * Provides mapping of v2 events to v1 events where they do not match
+ * This helps provide a unified interface for events across v1 and v2
+ */
+const messageTypeV1Map = {
+    [EventType.Data]: EventTypeV1.ExportVizDataToParent,
+};
+
+/**
+ * Base class for embedding v1 experience
+ * Note: The v1 version of ThoughtSpot Blink works on the AngularJS stack
+ * which is currently under migration to v2
  */
 export class V1Embed extends TsEmbed {
     protected viewConfig: ViewConfig;
@@ -294,24 +313,57 @@ export class V1Embed extends TsEmbed {
         const onAuthExpire = () =>
             this.executeCallbacks(EventTypeV1.AuthExpire, null);
 
-        initialize(onInit, onAuthExpire, this.getThoughtSpotHost());
-
-        const onAlert = (data: any) =>
-            this.executeCallbacks(EventTypeV1.Alert, data);
-        subscribeToAlerts(this.getThoughtSpotHost(), onAlert);
-
-        const onData = (data: any) =>
-            this.executeCallbacks(EventTypeV1.Data, data);
-        subscribeToData(onData);
+        initialize(
+            onInit,
+            onAuthExpire,
+            this.getThoughtSpotHost(),
+            config.authType,
+        );
     }
 
     /**
-     * Fetch the current pinboard or answer data from the
+     * @override
+     * @param event
+     */
+    protected getEventType(event: MessageEvent) {
+        // eslint-disable-next-line no-underscore-dangle
+        return event.data?.__type;
+    }
+
+    /**
+     * Trigger a v1 specific event
+     * @param messageType
+     */
+    protected triggerV1(messageType: EventTypeV1) {
+        this.iFrame.contentWindow.postMessage(
+            {
+                __type: messageType,
+            },
+            this.thoughtSpotHost,
+        );
+    }
+
+    /**
+     * Fetch the current answer data from the
      * embedded app asynchronously
      * @param callback A function to be executed with the
      * fetched as an argument
      */
-    public getCurrentData(callback: GenericCallbackFn): void {
-        getCurrentData(callback);
+    public getCurrentData(): void {
+        this.triggerV1(EventTypeV1.GetData);
+    }
+
+    /**
+     * @override
+     * @param messageType
+     * @param callback
+     */
+    public on(
+        messageType: string,
+        callback: MessageCallback,
+    ): typeof TsEmbed.prototype {
+        // use the v1 equivalent if any
+        const messageTypeV1 = messageTypeV1Map[messageType] || messageType;
+        return super.on(messageTypeV1, callback);
     }
 }

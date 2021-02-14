@@ -5,8 +5,10 @@
  * @fileoverview ThoughtSpot Javascript API for use of ThoughtSpot in external webpages.
  */
 
+import { AuthType } from '../types';
+
 // eslint-disable-next-line no-shadow
-enum Events {
+export enum Events {
     THOUGHTSPOT_AUTH_EXPIRED = 'ThoughtspotAuthExpired',
     EXPORT_VIZ_DATA_TO_PARENT = 'exportVizDataToParent',
     ALERT = 'alert',
@@ -197,6 +199,7 @@ function initialize(
     onInitialized: Callback,
     onAuthExpiration: Callback,
     _thoughtspotHost: string,
+    authType: AuthType,
 ): void {
     let tsHost = _thoughtspotHost;
     if (_thoughtspotHost === undefined) {
@@ -215,29 +218,31 @@ function initialize(
     setUpAuthExpirationHandling(thoughtspotHost);
     addAuthExpirationHandler(onAuthExpiration);
 
-    checkIfLoggedIn(thoughtspotHost, (isLoggedIn: boolean) => {
-        if (isLoggedIn) {
+    if (authType !== AuthType.None) {
+        checkIfLoggedIn(thoughtspotHost, (isLoggedIn: boolean) => {
+            if (isLoggedIn) {
+                if (isAtSSORedirectUrl()) {
+                    removeSSORedirectUrlMarker();
+                }
+                initialized = true;
+                onInitialized(true);
+                return;
+            }
+
+            // we have already tried authentication and it did not succeed, restore
+            // the current url to the original one and call the callback
             if (isAtSSORedirectUrl()) {
                 removeSSORedirectUrlMarker();
+                initialized = true;
+                onInitialized(false);
+                return;
             }
-            initialized = true;
-            onInitialized(true);
-            return;
-        }
 
-        // we have already tried authentication and it did not succeed, restore
-        // the current url to the original one and call the callback
-        if (isAtSSORedirectUrl()) {
-            removeSSORedirectUrlMarker();
-            initialized = true;
-            onInitialized(false);
-            return;
-        }
-
-        // redirect for SSO, when SSO is done this page will be loaded
-        // again and the same JS will execute again
-        doSSO(thoughtspotHost);
-    });
+            // redirect for SSO, when SSO is done this page will be loaded
+            // again and the same JS will execute again
+            doSSO(thoughtspotHost);
+        });
+    }
 }
 
 function notifyOnAuthExpiration(): void {
@@ -249,82 +254,4 @@ function notifyOnAuthExpiration(): void {
     );
 }
 
-const messageCallbacks = {};
-
-const eventHandler = {
-    handleEvent: (event: any) => {
-        // eslint-disable-next-line no-underscore-dangle
-        if (event.data && event.data.__type) {
-            // eslint-disable-next-line no-underscore-dangle
-            const callback = messageCallbacks[event.origin][event.data.__type];
-            if (typeof callback === 'function') {
-                callback(event);
-            }
-        }
-    },
-};
-
-function addSubscription(tsHost: string, type: string, callback: Callback) {
-    messageCallbacks[tsHost] = messageCallbacks[tsHost] || {};
-    messageCallbacks[tsHost][type] = callback;
-    window.addEventListener('message', eventHandler);
-}
-
-function subscribeToAlerts(tsHost: string, onAlertCallback: Callback): void {
-    let alertCallback = onAlertCallback;
-    if (typeof tsHost === 'function') {
-        alertCallback = tsHost;
-    } else {
-        thoughtspotHost = tsHost || thoughtspotHost;
-    }
-    addSubscription(thoughtspotHost, Events.ALERT, (event: any) => {
-        alertCallback(event);
-    });
-}
-
-function subscribeToData(responseCallback: Callback): void {
-    if (!thoughtspotHost) {
-        throw new Error('ThoughtSpot App needs to be initialized with a host');
-    }
-    addSubscription(
-        thoughtspotHost,
-        Events.EXPORT_VIZ_DATA_TO_PARENT,
-        (event: any) => {
-            responseCallback(event.data.data);
-        },
-    );
-}
-
-window.addEventListener('message', (event) => {
-    if (
-        // eslint-disable-next-line no-underscore-dangle
-        event.data.__type === Events.EXPORT_VIZ_DATA_TO_CHILD &&
-        event.data.data !== undefined &&
-        dataCallBack !== undefined &&
-        typeof dataCallBack === 'function'
-    ) {
-        dataCallBack(event.data.data);
-    }
-});
-
-function requestTSAppToPushData() {
-    window.parent.postMessage(
-        {
-            __type: Events.GET_DATA,
-        },
-        '*',
-    );
-}
-
-function getCurrentData(responseCallBack: Callback): void {
-    dataCallBack = responseCallBack;
-    requestTSAppToPushData();
-}
-
-export {
-    initialize,
-    notifyOnAuthExpiration,
-    subscribeToAlerts,
-    subscribeToData,
-    getCurrentData,
-};
+export { initialize, checkIfLoggedIn, notifyOnAuthExpiration };

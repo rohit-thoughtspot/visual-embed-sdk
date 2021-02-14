@@ -89,6 +89,7 @@ export enum EventType {
     Search = 'search',
     Filter = 'filter',
     Reload = 'reload',
+    CustomActionStatus = 'customActionStatus',
 }
 
 /**
@@ -97,8 +98,10 @@ export enum EventType {
 // eslint-disable-next-line no-shadow
 export enum EventTypeV1 {
     Alert = 'alert',
-    Data = 'data',
-    AuthExpire = 'authExpire',
+    GetData = 'getData',
+    AuthExpire = 'ThoughtspotAuthExpired',
+    EmbedHeight = 'EMBED_HEIGHT',
+    ExportVizDataToParent = 'exportVizDataToParent',
 }
 
 /**
@@ -125,6 +128,8 @@ export enum Param {
     SearchQuery = 'searchQuery',
     HideActions = 'hideAction',
     EnableVizTransformations = 'enableVizTransform',
+    EnableSearchAssist = 'enableSearchAssist',
+    HideResult = 'hideResult',
 }
 
 /**
