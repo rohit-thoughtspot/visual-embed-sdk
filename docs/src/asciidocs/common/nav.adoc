@@ -2,6 +2,7 @@
 :page-pageid: nav
 :page-description: Main navigation
 
+
 * xref:docs:intro-embed.adoc[Embedded Analytics with ThoughtSpot]
 ** xref:docs:integration-overview.adoc[Integration guidelines]
 ** xref:docs:spotdev-portal.adoc[SpotDev Portal]
@@ -20,6 +21,7 @@
 ////
 ** Error Handling
 ////
+
 
 * xref:docs:about-rest-apis.adoc[REST APIs]
 ** Get Started
@@ -40,6 +42,7 @@
 * Frequently asked questions
 ////
 
+---
 * Resources
 ** link://https://cloud-docs.thoughtspot.com[ThoughtSpot Documentation]
 ** Community
