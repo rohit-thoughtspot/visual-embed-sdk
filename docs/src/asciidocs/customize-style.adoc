@@ -46,7 +46,7 @@ To upload your application logos:
 .. Browse to your local directory and select logo image.
 
 +
-image::./images/style-applogo.png[Default Application Logo]
+image::./static/images/style-applogo.png[Default Application Logo]
 
 +
 Your icon image should be a square, and the recommended size is 140px by 140px.
@@ -57,7 +57,7 @@ This logo will appear on the top left of the interface.
 .. Click the wide icon under *Application Logo (Wide)*.
 .. Browse to your local directory and select logo image.
 +
-image::./images/style-widelogo.png[Wide application logo]
+image::./static/images/style-widelogo.png[Wide application logo]
 +
 The recommended size is 330px by 100px.
 The accepted file formats are jpg, jpeg, and png.
@@ -133,7 +133,7 @@ To choose a background color for the ThoughtSpot application:
 . Go to *SpotDev* > *Customizations* > *Styles*.
 . Click the background color box under *Embedded Application Background*.
 +
-image::./images/set-background-color.png[Application Background Color]
+image::./static/images/set-background-color.png[Application Background Color]
 
 . Use the color menu to choose your new background color.
 

@@ -15,17 +15,15 @@ Use this API to authenticate and login a user.
 `post` /tspublic/v1/session/login
 
 === Request Parameters
-////
-+++<table>++++++<colgroup>++++++<col style="width:20%">++++++</col>+++
-   +++<col style="width:15%">++++++</col>+++
-   +++<col style="width:65%">++++++</col>++++++</colgroup>+++
-   +++<thead class="thead" style="text-align:left;">++++++<tr>++++++<th>+++Form Parameter+++</th>+++
-         +++<th>+++Data Type+++</th>+++
-         +++<th>+++Description+++</th>++++++</tr>++++++</thead>+++
-   +++<tbody>++++++<tr>++++++<td>++++++<code>+++username+++</code>++++++</td>+++ +++<td>+++string+++</td>+++ +++<td>+++Username of the user.+++</td>++++++</tr>+++
-    +++<tr>++++++<td>++++++<code>+++password+++</code>++++++</td>+++ +++<td>+++string+++</td>+++ +++<td>+++Password of the user.+++</td>++++++</tr>+++
-    +++<tr>++++++<td>++++++<code>+++rememberme+++</code>++++++</td>+++ +++<td>+++boolean+++</td>+++ +++<td>+++A flag to remember the user session. The system default is +++<code>+++false+++</code>+++.+++</td>++++++</tr>++++++</tbody>++++++</table>+++
-////
+
+[width="100%" cols="1,2,4"]
+|====
+|Form Parameter|Data Type|Description
+|`username`|string|Username of the user.
+|password|string|Password of the user.
+|rememberme|boolean|A flag to remember the user session. The system default is `false`.
+|====
+
 === Request Example
 
 .cURL
@@ -35,7 +33,7 @@ curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header
 
 .Request URL
 ----
-https://<instance>/callosum/v1/tspublic/v1/session/login
+https://<base-uri>/tspublic/v1/session/login
 ----
 
 === Response Example

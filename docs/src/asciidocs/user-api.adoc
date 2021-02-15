@@ -12,24 +12,21 @@ For example, you may want to view all users and groups in your ThoughtSpot clust
 
 Use this API to transfer ownership of _all_ objects from one user to another.
 
-{% include note.html content="You cannot transfer objects to or from the system user or the administrative user." %}
+[NOTE]
+You cannot transfer objects to or from the system user or the administrative user.
 
 === Resource URL
 
 `post` /tspublic/v1/user/transfer/ownership
 
-=== Request Parameters+++<table>++++++<colgroup>++++++<col style="width:20%">++++++</col>+++
-      +++<col style="width:15%">++++++</col>+++
-      +++<col style="width:65%">++++++</col>++++++</colgroup>+++
-   +++<thead>++++++<tr>++++++<th>+++Query Parameter+++</th>+++
-         +++<th>+++Data Type+++</th>+++
-         +++<th>+++Description+++</th>++++++</tr>++++++</thead>+++
-+++<tbody>++++++<tr>++++++<td>++++++<code>+++fromUserName+++</code>++++++</td>+++
-         +++<td>+++string+++</td>+++
-         +++<td>+++Username to transfer from.+++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++toUserName+++</code>++++++</td>+++
-         +++<td>+++string+++</td>+++
-         +++<td>+++Username to transfer to.+++</td>++++++</tr>++++++</tbody>++++++</table>+++
+=== Request Parameters 
+[width="80%" cols="1,2,3"]
+|====
+Query Parameter|Data Type|Description
+|`fromUserName`|string|Username to transfer from.
+|`toUserName`|string|Username to transfer to.
+|====
+
 
 === Request Example
 
@@ -175,19 +172,14 @@ Use this API to change the password of a user.
 
 `post` /tspublic/v1/user/updatepassword
 
-=== Request Parameters+++<table>++++++<colgroup>++++++<col style="width:20%">++++++</col>+++
-   +++<col style="width:15%">++++++</col>+++
-   +++<col style="width:65%">++++++</col>++++++</colgroup>+++
-   +++<thead>++++++<tr>++++++<th>+++Form Parameter+++</th>+++
-         +++<th>+++Data Type+++</th>+++
-         +++<th>+++Description+++</th>++++++</tr>++++++</thead>+++
-   +++<tbody>++++++<tr>++++++<td>++++++<code>+++name+++</code>++++++</td>++++++<td>+++string+++</td>+++
-         +++<td>+++Name of the user.+++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++currentpassword+++</code>++++++</td>++++++<td>+++string+++</td>+++
-         +++<td>+++The current password of the user.+++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++password+++</code>++++++</td>++++++<td>+++string+++</td>+++
-         +++<td>+++A new password of the user.+++</td>++++++</tr>++++++</tbody>++++++</table>+++
-
+=== Request Parameters
+[width="100%" cols="1,2,3"]
+|====
+|Form Parameter|Data Type|Description
+|`name`|string|Name of the user.
+|`currentpassword`|string|The current password of the user.
+|password|string|A new password of the user. 
+|====
 === Request Example
 
 .cURL
@@ -197,7 +189,7 @@ curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header
 
 .Request URL
 ----
-https://<instance>/callosum/v1/tspublic/v1/user/updatepassword
+https://<base-uri>/tspublic/v1/user/updatepassword
 ----
 
 === Response Example
@@ -210,32 +202,23 @@ Not applicable
 == Fetch users and groups
 
 Use this API to get a list of all users, groups, and their inter-dependencies in the form of principal objects.
-A typical principal object contains the following properties:+++<table>++++++<colgroup>++++++<col style="width:20%">++++++</col>+++
-      +++<col style="width:80%">++++++</col>++++++</colgroup>+++
-   +++<thead>++++++<tr>++++++<th>+++Property+++</th>+++
-         +++<th>+++Description+++</th>++++++</tr>++++++</thead>+++
-+++<tbody>++++++<tr>++++++<td>++++++<code>+++name+++</code>++++++</td>+++
-         +++<td>++++++<p>+++Name of the principal.+++</p>+++
-            +++<p>+++This field, in conjunction with whether the object is a user or group, is
-               used to identify a user/group. Consequently, this field is required to be
-               unique (unique for users and groups separately. i.e., you can have user "`x`"
-               and group "`x`").+++</p>++++++</td>++++++</tr>+++
- +++<tr>++++++<td>++++++<code>+++displayName+++</code>++++++</td>+++
-         +++<td>+++Display name of the principal.+++</td>++++++</tr>+++
- +++<tr>++++++<td>++++++<code>+++description+++</code>++++++</td>+++
-         +++<td>+++Description of the principal.+++</td>++++++</tr>+++
-+++<tr>++++++<td>++++++<code>+++mail+++</code>++++++</td>+++
-         +++<td>+++Email address of the user. This field should be populated in case of user only. It is ignored in the case of groups.+++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++principalTypeEnum+++</code>++++++</td>+++
-         +++<td>++++++<p>+++Type of the user created in the ThoughtSpot system.+++</p>+++
-            +++<ul>++++++<li>++++++<code>+++LOCAL_USER+++</code>+++(a user is validated through password saved in the ThoughtSpot database)+++</li>+++
-            +++<li>++++++<code>+++LOCAL_GROUP+++</code>++++++</li>++++++</ul>++++++</td>++++++</tr>+++
-   +++<tr>++++++<td>++++++<code>+++password+++</code>++++++</td>+++
-         +++<td>+++Password of the user. This field should be populated in case of user only. It is ignored in the case of groups. Password is only required:
-         +++<ul>++++++<li>+++if the user is of LOCAL_USER type,+++</li>+++
-         +++<li>+++when the user is created for the first time.+++</li>++++++</ul>+++In subsequent update, the user password is not updated even if it changes in the source system.+++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++groupNames+++</code>++++++</td>+++
-         +++<td>+++Group names that a principal belongs to. Groups and users can belong to other groups.+++</td>++++++</tr>++++++</tbody>++++++</table>+++
+A typical principal object contains the following properties:
+
+[width="100%" cols="1,3"]
+|====
+|Property|Description 
+|Name of the principal|This field, in conjunction with whether the object is a user or group, is used to identify a user/group. Consequently, this field is required to be unique (unique for users and groups separately. i.e., you can have user "`x`" and group "`x`"). 
+|`displayName`|Display name of the principal.
+|description|Description of the principal. 
+|mail|Email address of the user. This field should be populated in case of user only. It is ignored in the case of groups. 
+|principalTypeEnum|Type of the user created in the ThoughtSpot system.
+|`LOCAL_USER`|a user is validated through password saved in the ThoughtSpot database `LOCAL_GROUP`.
+|password|Password of the user. This field should be populated in case of user only. It is ignored in the case of groups. Password is only required:
+* if the user is of LOCAL_USER type,
+* when the user is created for the first time. 
+* In subsequent update, the user password is not updated even if it changes in the source system. 
+|`groupNames`|Group names that a principal belongs to. Groups and users can belong to other groups. 
+|====
 
 === Resource URL
 
