@@ -211,4 +211,7 @@ Visualization drilldown is initiated.
 * Verify the runtime filters.
 
 === Code sample
-<To be added>
+
+++++
+<a href="{{tshost}}/#/everywhere/playground/pinboard">Preview in Playground</a>
+++++

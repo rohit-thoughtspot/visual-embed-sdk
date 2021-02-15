@@ -200,10 +200,15 @@ drilldown::
 Visualization drilldown is initiated.
 ////
 
-== Test the embedded workflow
+=== Test the embedded workflow
 
 * Load the client application. 
 * Try accessing a visualization embedded in your application.
 * Verify the iframe rendition.
 * If you have disabled a menu item from the visualizations page, verify if the menu command is disabled.
 * Verify the runtime filters.
+== Code sample
+
+++++
+<a href="{{tshost}}/#/everywhere/playground/answer">Preview in Playground</a>
+++++

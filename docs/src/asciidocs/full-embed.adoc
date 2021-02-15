@@ -215,7 +215,10 @@ The function `updateIframeUrl(id)` contains the logic to change the src URL of t
 ////
 
 === Code sample
-<To be added>
+
+++++
+<a href="{{tshost}}/#/everywhere/playground/fullApp">Preview in Playground</a>
+++++
 
 ////
 == Showing applications in a full screen
