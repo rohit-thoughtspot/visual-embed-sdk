@@ -39,13 +39,10 @@
 * Reference Guides
 ** link:{{navprefix}}=js-reference[Embed SDK Reference]
 ** link:{{navprefix}}=rest-api-reference[REST API Reference Guide]
-
 ////
 * xref:docs:glossary.adoc[Glossary]
-
 * Frequently asked questions
 ////
-
 * Resources
 ** link:https://cloud-docs.thoughtspot.com[ThoughtSpot Documentation]
 ** link:https://community.thoughtspot.com/customers/s/[Community] 
