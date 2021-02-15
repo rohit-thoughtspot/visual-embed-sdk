@@ -3,6 +3,7 @@
 :page-description: Main navigation
 
 
+
 * link:{{navprefix}}=intro-embed[Embedded Analytics with ThoughtSpot]
 ** link:{{navprefix}}=integration-overview[Integration guidelines]
 ** link:{{navprefix}}=spotdev-portal[SpotDev Portal]
@@ -17,6 +18,7 @@
 ** link:{{navprefix}}=full-embed[Embed full application]
 * link:{{navprefix}}=customize-style[Style customization]
 * link:{{navprefix}}=customize-actions-menu[Actions customization]
+
 ////
 ** Error Handling
 ////
@@ -33,6 +35,9 @@
 ** link:{{navprefix}}=search-data-api[Search Data API]
 * link:{{navprefix}}=js-reference[SDK Reference]
 * link:{{navprefix}}=rest-api-reference[API Reference Guide]
+=======
+
+
 ////
 * xref:docs:glossary.adoc[Glossary]
 
