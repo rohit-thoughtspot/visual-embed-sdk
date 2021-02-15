@@ -42,12 +42,11 @@ aside {
                     padding-left: 24px;
                     padding-right: 5px;
                     color: $primarycolor;
-                    font-weight: 600;
+                    font-weight: $font-weight-bold;
                     margin: 5px 0;
-    
                     & > a {
                         color: $primarycolor;
-                        font-weight: 600;
+                        font-weight: $font-weight-bold;
                         padding-right: 5px;
                     }
                 }
@@ -55,12 +54,12 @@ aside {
                 & > div.ulist > ul > li {
                     & > p {
                         padding-left: 42px;
-                        font-weight: 300 !important;
+                        font-weight: $font-weight-normal;
                         color: $primarycolor;
                         padding-right: 5px;
                         margin: 5px 0;
                         line-height: 32px;
-    
+
                         & > a {
                             color: $primarycolor;
                             padding-right: 5px;
@@ -78,13 +77,11 @@ aside {
                 }
             }
         }
-
     }
 
     a {
         font-size: 14px;
-        font-family: 'Plain';
-        font-weight: 300;
+        font-weight: $font-weight-normal;
         line-height: 32px;
         width: 100%;
         display: inline-block;
