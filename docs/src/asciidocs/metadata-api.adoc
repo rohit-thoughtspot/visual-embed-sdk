@@ -81,7 +81,8 @@ Use this API to fetch a comprehensive list of metadata headers of a specific obj
 `get` /tspublic/v1/metadata/listobjectheaders
 
 === Request Parameters
-[width="100%" cols="1,2,3"]
+[width="100%" cols="1,1,4"]
+[options='header']
 |====
 |Query Parameter|Data Type|Description
 |type|string| Specifies the metadata object type. 

@@ -33,7 +33,7 @@ To access style customization settings:
 
 :tip-caption:
 [TIP]
-The style customization settings are also available in the ThoughtSpot *Admin* console. 
+The style customization settings are also available in the ThoughtSpot *Admin*  console. 
 For more information on setting UI styles from the *Admin* console, see link://https://cloud-docs.thoughtspot.com/admin/ts-cloud/style-customization.html[Style Customization].
 
 [#logo-change]
@@ -84,7 +84,7 @@ They can use the *Reset colors* option on a chart to clear their changes.+++</dl
 == Customize fonts for visualizations
 
 You can add and edit fonts to customize the appearance of your charts and tables. 
-You can set the default fonts of your system by specifying either or both of the *Chart Visualization Fonts* and *Table Visualization Fonts* values.
+You can set the default fonts of your system by customizing *Chart Visualization Fonts* and *Table Visualization Fonts*.
 
 [NOTE]
 Before you begin, make sure you have the WOFF files available for the fonts you want to use.
@@ -93,8 +93,6 @@ Before you begin, make sure you have the WOFF files available for the fonts you 
 * To add a custom font, your font must be defined in a Web Open Font Format (`WOFF`) file.
 * Changes to chart and table defaults apply only to charts and features created _after_ you configure a value.
 * If you change table fonts, older tables retain their previous fonts.
-* Some settings can be overridden on a per-object level.
-* Users cannot configure their own defaults.
 
 === Update fonts
 To update fonts:
@@ -202,7 +200,7 @@ To customize the page title displayed in the browser bar:
 == Reset styles
 
 When you customize styles, the changes take effect after you refresh the browser.
-You can revert your changes by using the *Reset* button that appears when you move your cursor to the right of the setting.
+You can revert your changes by using the *Reset* button that appears when you move your cursor to the right of the style setting option.
 
 
 ////

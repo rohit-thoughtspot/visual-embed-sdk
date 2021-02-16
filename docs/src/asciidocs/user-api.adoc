@@ -20,9 +20,10 @@ You cannot transfer objects to or from the system user or the administrative use
 `post` /tspublic/v1/user/transfer/ownership
 
 === Request Parameters 
-[width="80%" cols="1,2,3"]
+[width="100%" cols="2,2,4"]
+[options='header']
 |====
-Query Parameter|Data Type|Description
+|Query Parameter|Data Type|Description
 |`fromUserName`|string|Username to transfer from.
 |`toUserName`|string|Username to transfer to.
 |====
@@ -65,13 +66,12 @@ This includes group membership.
 === Request Parameters
 
 This API uses `multipart/form-data` content type.
-
+[width="100%" cols="1,1,4"]
+[options='header']
 |===
-| Form Parameter | Data Type | Description
+|Form Parameter |Data Type |Description
 
-| `principals`
-| string
-| Specifies a list of principal objects.
+|`principals`|string| Specifies a list of principal objects.
 This is ideally a JSON file containing containing all users and groups present in the external database.
 
 | `applyChanges`

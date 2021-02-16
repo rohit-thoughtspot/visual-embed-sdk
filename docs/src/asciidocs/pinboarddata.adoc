@@ -17,34 +17,21 @@ You may want to visualize the following:
 `post` /tspublic/v1/pinboarddata
 
 == Request Parameters
-////
-+++<table>++++++<colgroup>++++++<col style="width:20%">++++++</col>+++
-      +++<col style="width:15%">++++++</col>+++
-      +++<col style="width:65%">++++++</col>++++++</colgroup>+++
-   +++<thead>++++++<tr>++++++<th>+++Query Parameter+++</th>+++
-         +++<th>+++Data Type+++</th>+++
-         +++<th>+++Description+++</th>++++++</tr>++++++</thead>+++
-   +++<tbody>++++++<tr>++++++<td>++++++<code>+++id+++</code>++++++</td>+++
-         +++<td>+++string+++</td>+++
-         +++<td>+++The pinboard id in the system.+++</td>++++++</tr>+++
-     +++<tr>++++++<td>++++++<code>+++vizid+++</code>++++++</td>+++
-         +++<td>+++string+++</td>+++
-         +++<td>+++(Optional) The visualization id(s) on a pinboard. Use this parameter to fetch a specific visualization on a pinboard. The syntax is:
-         +++<p>++++++<code>+++4fdf9d2c-6f34-4e3b-9fa6-bd0ca69676e1", "\...\...+++</code>++++++</p>++++++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++batchsize+++</code>++++++</td>+++
-         +++<td>+++integer+++</td>+++
-         +++<td>+++The batch size for loading of pinboard objects. The system default is +++<code>+++-1+++</code>+++.+++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++pagenumber+++</code>++++++</td>+++
-         +++<td>+++integer+++</td>+++
-         +++<td>+++The system default is +++<code>+++-1+++</code>+++.+++</td>++++++</tr>+++
-     +++<tr>++++++<td>++++++<code>+++offset+++</code>++++++</td>+++
-         +++<td>+++integer+++</td>+++
-         +++<td>+++The system default is +++<code>+++-1+++</code>+++. Alternately, set the offset using the following code:
-         +++<p>++++++<code>+++1-based indexingOffset = (pageNumber - 1) * batchSize+++</code>++++++</p>++++++</td>++++++</tr>+++
-      +++<tr>++++++<td>++++++<code>+++formattype+++</code>++++++</td>+++
-         +++<td>+++string+++</td>+++
-         +++<td>+++Valid values are +++<code>+++COMPACT+++</code>+++ or +++<code>+++FULL+++</code>+++ JSON. The system default is +++<code>+++COMPACT+++</code>+++.+++</td>++++++</tr>++++++</tbody>++++++</table>+++
-////
+
+[width="100%" cols="1,1,4"]
+[options='header']
+|====
+|Query Parameter|Data Type|Description
+|`id`|string|The pinboard id in the system.
+|`vizid`|string|(Optional) The visualization id(s) on a pinboard. Use this parameter to fetch a specific visualization on a pinboard. The syntax is:
+         `4fdf9d2c-6f34-4e3b-9fa6-bd0ca69676e1`, "\...\...
+|`batchsize`|integer|The batch size for loading of pinboard objects. The system default is -1. 
+|`pagenumber`|integer|The system default is -1.
+|`offset`|integer|The system default is -1. Alternately, set the offset using the following code:
+         `1-based indexingOffset = (pageNumber - 1)` * batchSize
+|`formattype`|string|Valid values are `COMPACT` or `FULL JSON`. The system default is `COMPACT`.
+|====
+
 == Request Example
 
 .cURL

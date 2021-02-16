@@ -16,7 +16,8 @@ Use this API to authenticate and login a user.
 
 === Request Parameters
 
-[width="100%" cols="1,2,4"]
+[width="100%" cols="1,1,4"]
+[options='header']
 |====
 |Form Parameter|Data Type|Description
 |`username`|string|Username of the user.
