@@ -86,7 +86,9 @@ init
 thoughtSpotHost::
 _String_. Hostname or IP address of the ThoughtSpot application.
 
+
 +
+
 ---
 authType::
 [horizontal]
@@ -223,7 +225,9 @@ The function `updateIframeUrl(id)` contains the logic to change the src URL of t
 === Code sample
 
 ++++
+
 <a href="{{tshost}}/#/everywhere/playground/fullApp" id="preview-in-playground">Preview in Playground</a>
+
 ++++
 
 ////
