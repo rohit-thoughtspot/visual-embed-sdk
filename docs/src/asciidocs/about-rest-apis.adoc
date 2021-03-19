@@ -49,6 +49,7 @@ The following APIs are available on the <a href="{{tshost}}/external/swagger  ta
 |Request URL|Description|
 `*POST* /tspublic/v1/session/login` |Authenticate and log in a user.
 |`*POST* /tspublic/v1/session/logout`|Log out a user from an existing session.
+|`*POST* /tspublic/v1/session/auth/token`|Obtain authentication token for a user.
 |====
 
 === Data APIs
