@@ -55,13 +55,14 @@ The *Playground* allows you to explore the following ThoughtSpot components that
 
 +
 ++++
-<a href="{{origin}}/playground/search" id="preview-in-playground" target="_parent">Preview in Playground</a>
-++++
-////
-++++
 <a href="{{tshost}}/#/everywhere/playground/search" id="preview-in-playground" target="_parent">Go to Playground</a>
 ++++
 ////
+++++
+<a href="{{origin}}/playground/search" id="preview-in-playground" target="_parent">Preview in Playground</a>
+++++
+////
+
 Customizations::
 For ThoughtSpot users with administrator and developer privileges, the Developer portal displays the following customization menu items:
 
