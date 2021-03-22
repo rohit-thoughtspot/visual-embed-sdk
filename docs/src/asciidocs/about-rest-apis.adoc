@@ -19,7 +19,7 @@ The REST APIs return data as a JSON string. To embed data into your application,
 REST APIs retrieve live data from ThoughtSpot, so whenever the Web page is rendered, the current values will be shown.
 
 == List of APIs
-The following APIs are available on the +++ <a href="{{tshost}}/external/swagger  target="_blank">Swagger portal</a> +++ for ThoughtSpot users.
+The following APIs are available on the pass:[<a href="{{tshost}}/external/swagger  target="_blank">Swagger portal</a>] for ThoughtSpot users.
 
 === User management
 [width="80%" cols="2,2"]
