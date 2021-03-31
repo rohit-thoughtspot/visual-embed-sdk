@@ -2,7 +2,7 @@ import React, { useState, useEffect, lazy } from 'react';
 import { useStaticQuery, graphql, navigate } from 'gatsby';
 import { useResizeDetector } from 'react-resize-detector';
 import { useFlexSearch } from 'react-use-flexsearch';
-import { queryStringParser, removeTrailingSlash } from '../utils/app-utils';
+import { queryStringParser } from '../utils/app-utils';
 import passThroughHandler from '../utils/doc-utils';
 import LeftSidebar from '../components/LeftSidebar';
 import Docmap from '../components/Docmap';
@@ -18,12 +18,14 @@ import {
     PREVIEW_PREFIX,
     NOT_FOUND_PAGE_ID,
     DEFAULT_HOST,
+    DEFAULT_PREVIEW_HOST,
     DEFAULT_APP_ROOT,
 } from '../configs/doc-configs';
 import {
     LEFT_NAV_WIDTH_DESKTOP,
+    MAX_TABLET_RESOLUTION,
+    LEFT_NAV_WIDTH_TABLET,
     MAX_MOBILE_RESOLUTION,
-    LEFT_NAV_WIDTH_MOBILE,
 } from '../constants/uiConstants';
 
 // markup
@@ -34,7 +36,7 @@ const IndexPage = ({ location }) => {
         [TS_ORIGIN_PARAM]: '',
         [TS_PAGE_ID_PARAM]: '',
         [NAV_PREFIX]: '',
-        [PREVIEW_PREFIX]: `${DEFAULT_HOST}/#${DEFAULT_APP_ROOT}`,
+        [PREVIEW_PREFIX]: `${DEFAULT_PREVIEW_HOST}/#${DEFAULT_APP_ROOT}`,
     });
     const [docTitle, setDocTitle] = useState('');
     const [docContent, setDocContent] = useState('');
@@ -42,11 +44,13 @@ const IndexPage = ({ location }) => {
     const [navContent, setNavContent] = useState('');
     const [backLink, setBackLink] = useState('');
     const [leftNavWidth, setLeftNavWidth] = useState(
-        width > MAX_MOBILE_RESOLUTION
+        width > MAX_TABLET_RESOLUTION
             ? LEFT_NAV_WIDTH_DESKTOP
-            : LEFT_NAV_WIDTH_MOBILE,
+            : LEFT_NAV_WIDTH_TABLET,
     );
     const [query, updateQuery] = useState('');
+    const [leftNavOpen, setLeftNavOpen] = useState(false);
+    const [keyword, updateKeyword] = useState('');
 
     useEffect(() => {
         const paramObj = queryStringParser(location.search);
@@ -171,7 +175,7 @@ const IndexPage = ({ location }) => {
         `,
     );
 
-    const results = useFlexSearch(query, index, store).reduce((acc, cur) => {
+    const results = useFlexSearch(keyword, index, store).reduce((acc, cur) => {
         if (!acc.some((data) => data.pageid === cur.pageid)) {
             acc.push(cur);
         }
@@ -179,9 +183,11 @@ const IndexPage = ({ location }) => {
     }, []);
 
     const optionSelected = (pageid: string) => {
-        updateQuery('');
-        navigate(pageid);
+        updateKeyword('');
+        navigate(`${params[NAV_PREFIX]}=${pageid}`);
     };
+
+    const isMaxMobileResolution = !(width < MAX_MOBILE_RESOLUTION);
 
     return (
         <>
@@ -193,18 +199,25 @@ const IndexPage = ({ location }) => {
                     docWidth={width}
                     handleLeftNavChange={setLeftNavWidth}
                     location={location}
+                    setLeftNavOpen={setLeftNavOpen}
+                    leftNavOpen={leftNavOpen}
                 />
                 <div
                     className="documentBody"
-                    style={{ width: `${width - leftNavWidth}px` }}
+                    style={{
+                        width: isMaxMobileResolution
+                            ? `${width - leftNavWidth}px`
+                            : '100%',
+                    }}
                 >
                     <Search
-                        value={query}
+                        keyword={keyword}
                         onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                            updateQuery((e.target as HTMLInputElement).value)
+                            updateKeyword((e.target as HTMLInputElement).value)
                         }
                         options={results}
                         optionSelected={optionSelected}
+                        leftNavOpen={leftNavOpen}
                     />
                     <div className="introWrapper">
                         <Document docTitle={docTitle} docContent={docContent} />
