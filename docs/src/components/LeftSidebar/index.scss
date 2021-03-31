@@ -39,6 +39,7 @@ aside {
                     padding-right: $padding-xs;
                     color: $primarycolor;
                     font-weight: $font-weight-bold;
+                    cursor: pointer;
                     & > a {
                         color: $primarycolor;
                         font-weight: $font-weight-bold;
@@ -82,6 +83,24 @@ aside {
             p {
                 padding-right: $padding-xs;
                 margin: $margin-xs 0;
+            }
+        }
+
+        .displayNone {
+            display: none;
+        }
+
+        .iconSpan {
+            position: relative;
+            right: 8px;
+            top: -3px;
+            float: right;
+
+            img {
+                width: 12px;
+                position: relative;
+                top: 2px;
+                right: 10px;
             }
         }
     }

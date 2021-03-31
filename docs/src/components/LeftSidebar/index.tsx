@@ -13,6 +13,7 @@ import {
     MIN_LEFT_NAV_WIDTH_DESKTOP,
     MIN_LEFT_NAV_WIDTH_MOBILE,
 } from '../../constants/uiConstants';
+import { collapseAndExpandLeftNav } from './helper';
 import './index.scss';
 
 const LeftSideBar = (props: {
@@ -43,6 +44,10 @@ const LeftSideBar = (props: {
     useEffect(() => {
         props.handleLeftNavChange(width);
     }, [width]);
+
+    useEffect(() => {
+        if (props.navContent.length > 0) collapseAndExpandLeftNav();
+    }, [props.navContent, params[TS_PAGE_ID_PARAM]]);
 
     const isMaxMobileResolution = !(props.docWidth < MAX_MOBILE_RESOLUTION);
 
