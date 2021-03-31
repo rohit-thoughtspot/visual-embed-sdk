@@ -2,7 +2,7 @@ import React, { useState, useEffect, lazy } from 'react';
 import { useStaticQuery, graphql, navigate } from 'gatsby';
 import { useResizeDetector } from 'react-resize-detector';
 import { useFlexSearch } from 'react-use-flexsearch';
-import { queryStringParser, removeTrailingSlash } from '../utils/app-utils';
+import { queryStringParser } from '../utils/app-utils';
 import passThroughHandler from '../utils/doc-utils';
 import LeftSidebar from '../components/LeftSidebar';
 import Docmap from '../components/Docmap';
@@ -18,6 +18,7 @@ import {
     PREVIEW_PREFIX,
     NOT_FOUND_PAGE_ID,
     DEFAULT_HOST,
+    DEFAULT_PREVIEW_HOST,
     DEFAULT_APP_ROOT,
 } from '../configs/doc-configs';
 import {
@@ -34,7 +35,7 @@ const IndexPage = ({ location }) => {
         [TS_ORIGIN_PARAM]: '',
         [TS_PAGE_ID_PARAM]: '',
         [NAV_PREFIX]: '',
-        [PREVIEW_PREFIX]: `${DEFAULT_HOST}/#${DEFAULT_APP_ROOT}`,
+        [PREVIEW_PREFIX]: `${DEFAULT_PREVIEW_HOST}/#${DEFAULT_APP_ROOT}`,
     });
     const [docTitle, setDocTitle] = useState('');
     const [docContent, setDocContent] = useState('');
@@ -46,7 +47,7 @@ const IndexPage = ({ location }) => {
             ? LEFT_NAV_WIDTH_DESKTOP
             : LEFT_NAV_WIDTH_MOBILE,
     );
-    const [query, updateQuery] = useState('');
+    const [keyword, updateKeyword] = useState('');
 
     useEffect(() => {
         const paramObj = queryStringParser(location.search);
@@ -171,7 +172,7 @@ const IndexPage = ({ location }) => {
         `,
     );
 
-    const results = useFlexSearch(query, index, store).reduce((acc, cur) => {
+    const results = useFlexSearch(keyword, index, store).reduce((acc, cur) => {
         if (!acc.some((data) => data.pageid === cur.pageid)) {
             acc.push(cur);
         }
@@ -179,8 +180,8 @@ const IndexPage = ({ location }) => {
     }, []);
 
     const optionSelected = (pageid: string) => {
-        updateQuery('');
-        navigate(pageid);
+        updateKeyword('');
+        navigate(`${params[NAV_PREFIX]}=${pageid}`);
     };
 
     return (
@@ -199,9 +200,9 @@ const IndexPage = ({ location }) => {
                     style={{ width: `${width - leftNavWidth}px` }}
                 >
                     <Search
-                        value={query}
+                        keyword={keyword}
                         onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                            updateQuery((e.target as HTMLInputElement).value)
+                            updateKeyword((e.target as HTMLInputElement).value)
                         }
                         options={results}
                         optionSelected={optionSelected}
