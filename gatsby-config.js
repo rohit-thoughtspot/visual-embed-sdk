@@ -56,7 +56,6 @@ class CustomDocConverter {
 
             // get anchor attributes
             let attributes = node.getAttributes();
-
             if (this.isTransformLink(target)) {
                 // check if link is for 'Visual Embed SDK' documents or not
                 if (target.includes(config.VISUAL_EMBED_SDK_PREFIX)) {
@@ -66,9 +65,7 @@ class CustomDocConverter {
                         `{{${config.VISUAL_EMBED_SDK_PREFIX}}}`,
                         '',
                     )}"`;
-                }
-
-                if (!target.startsWith('#')) {
+                } else if (!target.startsWith('#')) {
                     target = target.substring(
                         target.lastIndexOf(':') + 1,
                         target.lastIndexOf('.html'),
