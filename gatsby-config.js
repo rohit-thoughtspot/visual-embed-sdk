@@ -49,6 +49,8 @@ class CustomDocConverter {
     convert(node, transform) {
         // checking anchor node type
         if (node.getNodeName() === 'inline_anchor') {
+            let anchorMarkup = '';
+
             // get anchor target set inside adoc file
             let target = node.getTarget();
 
@@ -58,18 +60,12 @@ class CustomDocConverter {
             if (this.isTransformLink(target)) {
                 // check if link is for 'Visual Embed SDK' documents or not
                 if (target.includes(config.VISUAL_EMBED_SDK_PREFIX)) {
-                    let anchorMarkup = `href="${getPath(
-                        config.DOC_REPO_NAME,
-                    )}/${config.TYPE_DOC_PREFIX}${target.replace(
+                    anchorMarkup = `href="${getPath(config.DOC_REPO_NAME)}/${
+                        config.TYPE_DOC_PREFIX
+                    }${target.replace(
                         `{{${config.VISUAL_EMBED_SDK_PREFIX}}}`,
                         '',
                     )}"`;
-
-                    if (attributes.window) {
-                        anchorMarkup += ` target="${attributes.window}"`;
-                    }
-
-                    return `<a ${anchorMarkup}>${node.getText()}</a>`;
                 }
 
                 if (!target.startsWith('#')) {
@@ -78,14 +74,14 @@ class CustomDocConverter {
                         target.lastIndexOf('.html'),
                     );
 
-                    let anchorMarkup = `href="{{${config.NAV_PREFIX}}}={{${target}}}"`;
-
-                    if (attributes.window) {
-                        anchorMarkup += ` target="${attributes.window}"`;
-                    }
-
-                    return `<a ${anchorMarkup}>${node.getText()}</a>`;
+                    anchorMarkup = `href="{{${config.NAV_PREFIX}}}={{${target}}}"`;
                 }
+
+                if (attributes.window) {
+                    anchorMarkup += ` target="${attributes.window}"`;
+                }
+
+                return `<a ${anchorMarkup}>${node.getText()}</a>`;
             }
         }
 
