@@ -19,7 +19,7 @@ const Docmap = (props: {
         if (tocEl) {
             const { hash } = props.location;
             if (hash) {
-                const ele = document.querySelector(`${hash}`);
+                const ele = document.querySelector(hash);
                 if (ele) {
                     tocEl = toggleActiveClass(tocEl, hash);
                     /* To position the element when anchor tag is clicked on right nav */
