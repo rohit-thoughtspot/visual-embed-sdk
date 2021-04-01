@@ -59,21 +59,26 @@ class CustomDocConverter {
             if (this.isTransformLink(target)) {
                 // check if link is for 'Visual Embed SDK' documents or not
                 if (target.includes(config.VISUAL_EMBED_SDK_PREFIX)) {
-                    anchorMarkup = `href="${getPath(config.DOC_REPO_NAME)}/${
+                    anchorMarkup = `${getPath(config.DOC_REPO_NAME)}/${
                         config.TYPE_DOC_PREFIX
                     }${target.replace(
                         `{{${config.VISUAL_EMBED_SDK_PREFIX}}}`,
                         '',
-                    )}"`;
+                    )}`;
                 } else if (!target.startsWith('#')) {
                     target = target.substring(
                         target.lastIndexOf(':') + 1,
                         target.lastIndexOf('.html'),
                     );
 
-                    anchorMarkup = `href="{{${config.NAV_PREFIX}}}={{${target}}}"`;
+                    anchorMarkup = `{{${config.NAV_PREFIX}}}={{${target}}}`;
                 }
 
+                // attribute handling - DO NOT CHANGE ORDER OF IFs
+                if (attributes.fragment) {
+                    anchorMarkup += `#${attributes.fragment}`;
+                }
+                anchorMarkup = `href="${anchorMarkup}"`;
                 if (attributes.window) {
                     anchorMarkup += ` target="${attributes.window}"`;
                 }
