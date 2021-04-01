@@ -34,6 +34,9 @@ const LeftSideBar = (props: {
 
     const { width, ref, height } = useResizeDetector();
 
+    const isMaxTabletResolution = !(props.docWidth < MAX_TABLET_RESOLUTION);
+    const isMaxMobileResolution = !(props.docWidth < MAX_MOBILE_RESOLUTION);
+
     useEffect(() => {
         const divElement = document.createElement('div');
         divElement.innerHTML = props.navContent;
@@ -51,16 +54,14 @@ const LeftSideBar = (props: {
     }, [width]);
 
     useEffect(() => {
-        if (props.navContent.length > 0) collapseAndExpandLeftNav();
-    }, [props.navContent, params[TS_PAGE_ID_PARAM]]);
+        if (props.navContent.length > 0)
+            collapseAndExpandLeftNav(props.setLeftNavOpen);
+    }, [props.navContent, params[TS_PAGE_ID_PARAM], isMaxMobileResolution]);
 
     const onMenuClick = () => {
         props.setLeftNavOpen(!props.leftNavOpen);
         document.documentElement.scrollTop = 0;
     };
-
-    const isMaxTabletResolution = !(props.docWidth < MAX_TABLET_RESOLUTION);
-    const isMaxMobileResolution = !(props.docWidth < MAX_MOBILE_RESOLUTION);
 
     const renderLeftNav = () => {
         return isMaxMobileResolution ? (

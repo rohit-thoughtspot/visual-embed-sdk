@@ -1,7 +1,7 @@
 import ArrowDown from '../../assets/svg/arrowDown.svg';
 import ArrowForward from '../../assets/svg/arrowForward.svg';
 
-export const collapseAndExpandLeftNav = () => {
+export const collapseAndExpandLeftNav = (setLeftNavOpen: Function) => {
     setTimeout(() => {
         document
             .querySelectorAll('.navWrapper>.ulist>ul>li>p')
@@ -26,6 +26,16 @@ export const collapseAndExpandLeftNav = () => {
                             ? ArrowForward
                             : ArrowDown;
                     });
+
+                    document
+                        .querySelectorAll(
+                            '.navWrapper>.ulist>ul>li>div.ulist>ul>li p>a',
+                        )
+                        .forEach((link) => {
+                            link.addEventListener('click', () => {
+                                setLeftNavOpen(false);
+                            });
+                        });
                 }
             });
     }, 50);
