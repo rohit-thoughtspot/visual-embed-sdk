@@ -20,8 +20,9 @@ export const collapseAndExpandLeftNav = (pageId: string, setLeftNavOpen: Functio
 
                     //Checking if this div contains the active link
                     const allLinks = divElement.querySelectorAll('a');
-                    for (let i=0; i<allLinks.length-1; i++) {
-                        if (allLinks[i].href.split('=')[1] === pageId) {
+                    for (let i = 0; i < allLinks.length; i++) {
+                        const splitArr = allLinks[i].href.split('=');
+                        if (splitArr.length > 1 && splitArr[1] === pageId) {
                             imageElement.src = ArrowDown;
                             divElement.classList.remove('displayNone');
                             break;
