@@ -79,6 +79,8 @@ aside {
                     color: $primarycolor;
                     font-weight: $font-weight-bold;
                     cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
                     & > a {
                         color: $primarycolor;
                         font-weight: $font-weight-bold;
@@ -128,14 +130,14 @@ aside {
         .iconSpan {
             position: relative;
             right: 8px;
-            top: -3px;
+            top: 0px;
             float: right;
+            padding-left: 15px;
 
             img {
                 width: $arrow-icon-width;
                 position: relative;
                 top: 2px;
-                right: 10px;
             }
         }
     }
