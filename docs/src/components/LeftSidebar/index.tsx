@@ -13,7 +13,7 @@ import {
     MIN_LEFT_NAV_WIDTH_TABLET,
     MAX_MOBILE_RESOLUTION,
 } from '../../constants/uiConstants';
-import { collapseAndExpandLeftNav } from './helper';
+import { collapseAndExpandLeftNav,addExpandCollapseImages } from './helper';
 import ClearIcon from '../../assets/svg/clear.svg';
 import MenuIcon from '../../assets/svg/menu.svg';
 import NavContent from './NavContent';
@@ -46,17 +46,17 @@ const LeftSideBar = (props: {
         if (tag) {
             tag.classList.add('active');
         }
-        setNavContent(divElement.innerHTML);
-    }, [params, props.navContent]);
+        const updatedHTML = addExpandCollapseImages(divElement.innerHTML, params[TS_PAGE_ID_PARAM]);
+        setNavContent(updatedHTML);
+    }, [params[NAV_PREFIX], params[TS_PAGE_ID_PARAM], props.navContent]);
 
     useEffect(() => {
         props.handleLeftNavChange(width);
     }, [width]);
 
     useEffect(() => {
-        if (props.navContent.length > 0)
-            collapseAndExpandLeftNav(params[TS_PAGE_ID_PARAM], props.setLeftNavOpen);
-    }, [props.navContent, params[TS_PAGE_ID_PARAM], isMaxMobileResolution]);
+        collapseAndExpandLeftNav(props.setLeftNavOpen);
+    }, [params[TS_PAGE_ID_PARAM], isMaxMobileResolution]);
 
     const onMenuClick = () => {
         props.setLeftNavOpen(!props.leftNavOpen);
