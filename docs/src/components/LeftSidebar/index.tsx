@@ -55,7 +55,7 @@ const LeftSideBar = (props: {
     }, [width]);
 
     useEffect(() => {
-        collapseAndExpandLeftNav(props.setLeftNavOpen);
+        collapseAndExpandLeftNav(ref as React.RefObject<HTMLDivElement>, props.setLeftNavOpen);
     }, [params[TS_PAGE_ID_PARAM], isMaxMobileResolution]);
 
     const onMenuClick = () => {

@@ -1,5 +1,8 @@
+import React from 'react';
 import ArrowDown from '../../assets/svg/arrowDown.svg';
 import ArrowForward from '../../assets/svg/arrowForward.svg';
+
+const linksContainer = '.navWrapper>.ulist>ul>li>div.ulist';
 
 export const addExpandCollapseImages = (navContent: string, pageId: string) => {
     const nav = document.createElement('div');
@@ -7,9 +10,9 @@ export const addExpandCollapseImages = (navContent: string, pageId: string) => {
     nav.classList.add('navWrapper');
     nav.querySelectorAll('.navWrapper>.ulist>ul>li>p').forEach((tag, index) => {
         const divElement = nav.querySelectorAll(
-            '.navWrapper>.ulist>ul>li>div.ulist',
+            linksContainer,
         )[index];
-        if (typeof divElement !== 'undefined') {
+        if (!!divElement) {
             //Creating arrow icons to be added
             const spanElement = document.createElement('span');
             spanElement.classList.add('iconSpan');
@@ -19,14 +22,12 @@ export const addExpandCollapseImages = (navContent: string, pageId: string) => {
 
             //Checking if this div contains the active link
             const allLinks = divElement.querySelectorAll('a');
-            if (typeof allLinks !== 'undefined') {
-                for (let i = 0; i < allLinks.length; i++) {
-                    const splitArr = allLinks[i].href.split('=');
-                    if (splitArr.length > 1 && splitArr[1] === pageId) {
-                        imageElement.src = ArrowDown;
-                        divElement.classList.remove('displayNone');
-                        break;
-                    }
+            for (let i = 0; i < allLinks.length; i++) {
+                const splitArr = allLinks[i].href.split('=');
+                if (splitArr.length > 1 && splitArr[1] === pageId) {
+                    imageElement.src = ArrowDown;
+                    divElement.classList.remove('displayNone');
+                    break;
                 }
             }
 
@@ -38,13 +39,15 @@ export const addExpandCollapseImages = (navContent: string, pageId: string) => {
     return nav.innerHTML;
 };
 
-export const collapseAndExpandLeftNav = (setLeftNavOpen: Function) => {
+export const collapseAndExpandLeftNav = (ref: React.RefObject<HTMLDivElement>, setLeftNavOpen: Function) => {
+    const headings = '.navWrapper>.ulist>ul>li>p';
+    const links = '.navWrapper>.ulist>ul>li>div.ulist>ul>li p>a';
     setTimeout(() => {
-        document
-            .querySelectorAll('.navWrapper>.ulist>ul>li>p')
+        ref.current
+            .querySelectorAll(headings)
             .forEach((tag, index) => {
-                const divElement = document.querySelectorAll(
-                    '.navWrapper>.ulist>ul>li>div.ulist',
+                const divElement = ref.current.querySelectorAll(
+                    linksContainer,
                 )[index];
 
                 //Adding click listener to the headings
@@ -58,9 +61,9 @@ export const collapseAndExpandLeftNav = (setLeftNavOpen: Function) => {
                 });
 
                 //Adding click listener to close left nav when in mobile resolution
-                document
+                ref.current
                     .querySelectorAll(
-                        '.navWrapper>.ulist>ul>li>div.ulist>ul>li p>a',
+                        links,
                     )
                     .forEach((link) => {
                         link.addEventListener('click', () => {
