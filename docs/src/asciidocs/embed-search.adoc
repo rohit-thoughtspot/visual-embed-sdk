@@ -164,7 +164,7 @@ disabledActions: Action.showUnderlyingData
 <a href="{{previewPrefix}}/playground/search?modifyActions=true" id="preview-in-playground" target="_blank">Preview in Playground</a>
 ++++
 +
-For a complete list of action menu items and the corresponding strings to use for disabling menu items, see link:{{visualEmbedSDKPrefix}}/enums/action.html[Actions, window=_blank].
+For a complete list of action menu items and the corresponding strings to use for disabling menu items, see link:{{visualEmbedSDKPrefix}}/enums/action.html[Action, window=_blank].
 
 disabledActionReason [small]_optional_::
 _String_. Indicates the reason for disabling an action from the search answer page view.
