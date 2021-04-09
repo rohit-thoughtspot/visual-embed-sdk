@@ -1,16 +1,15 @@
 import React from 'react';
 import ArrowDown from '../../assets/svg/arrowDown.svg';
 import ArrowForward from '../../assets/svg/arrowForward.svg';
-
-const linksContainer = '.navWrapper>.ulist>ul>li>div.ulist';
+import selectors from '../../constants/selectorsContant';
 
 export const addExpandCollapseImages = (navContent: string, pageId: string) => {
     const nav = document.createElement('div');
     nav.innerHTML = navContent;
     nav.classList.add('navWrapper');
-    nav.querySelectorAll('.navWrapper>.ulist>ul>li>p').forEach((tag, index) => {
+    nav.querySelectorAll(selectors.headings).forEach((tag, index) => {
         const divElement = nav.querySelectorAll(
-            linksContainer,
+            selectors.linksContainer,
         )[index];
         if (!!divElement) {
             //Creating arrow icons to be added
@@ -39,15 +38,13 @@ export const addExpandCollapseImages = (navContent: string, pageId: string) => {
     return nav.innerHTML;
 };
 
-export const collapseAndExpandLeftNav = (ref: React.RefObject<HTMLDivElement>, setLeftNavOpen: Function) => {
-    const headings = '.navWrapper>.ulist>ul>li>p';
-    const links = '.navWrapper>.ulist>ul>li>div.ulist>ul>li p>a';
+export const collapseAndExpandLeftNav = (doc: HTMLDivElement, setLeftNavOpen: Function) => {
     setTimeout(() => {
-        ref.current
-            .querySelectorAll(headings)
+        doc
+            .querySelectorAll(selectors.headings)
             .forEach((tag, index) => {
-                const divElement = ref.current.querySelectorAll(
-                    linksContainer,
+                const divElement = doc.querySelectorAll(
+                    selectors.linksContainer,
                 )[index];
 
                 //Adding click listener to the headings
@@ -61,9 +58,9 @@ export const collapseAndExpandLeftNav = (ref: React.RefObject<HTMLDivElement>, s
                 });
 
                 //Adding click listener to close left nav when in mobile resolution
-                ref.current
+                doc
                     .querySelectorAll(
-                        links,
+                        selectors.links,
                     )
                     .forEach((link) => {
                         link.addEventListener('click', () => {
