@@ -39,34 +39,32 @@ export const addExpandCollapseImages = (navContent: string, pageId: string) => {
 };
 
 export const collapseAndExpandLeftNav = (doc: HTMLDivElement, setLeftNavOpen: Function) => {
-    setTimeout(() => {
+    doc
+    .querySelectorAll(selectors.headings)
+    .forEach((tag, index) => {
+        const divElement = doc.querySelectorAll(
+            selectors.linksContainer,
+        )[index];
+
+        //Adding click listener to the headings
+        tag.addEventListener('click', () => {
+            divElement.classList.toggle('displayNone');
+            const img = divElement.parentElement.children[0].children[0]
+                .children[0] as HTMLImageElement;
+            img.src = divElement.classList.contains('displayNone')
+                ? ArrowForward
+                : ArrowDown;
+        });
+
+        //Adding click listener to close left nav when in mobile resolution
         doc
-            .querySelectorAll(selectors.headings)
-            .forEach((tag, index) => {
-                const divElement = doc.querySelectorAll(
-                    selectors.linksContainer,
-                )[index];
-
-                //Adding click listener to the headings
-                tag.addEventListener('click', () => {
-                    divElement.classList.toggle('displayNone');
-                    const img = divElement.parentElement.children[0].children[0]
-                        .children[0] as HTMLImageElement;
-                    img.src = divElement.classList.contains('displayNone')
-                        ? ArrowForward
-                        : ArrowDown;
+            .querySelectorAll(
+                selectors.links,
+            )
+            .forEach((link) => {
+                link.addEventListener('click', () => {
+                    setLeftNavOpen(false);
                 });
-
-                //Adding click listener to close left nav when in mobile resolution
-                doc
-                    .querySelectorAll(
-                        selectors.links,
-                    )
-                    .forEach((link) => {
-                        link.addEventListener('click', () => {
-                            setLeftNavOpen(false);
-                        });
-                    });
             });
-    }, 100);
+    });
 };
