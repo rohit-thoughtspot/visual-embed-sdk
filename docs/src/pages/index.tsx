@@ -30,6 +30,7 @@ import {
     MAX_MOBILE_RESOLUTION,
     MAIN_HEIGHT_WITHOUT_DOC_CONTENT,
 } from '../constants/uiConstants';
+import { SearchQueryResult } from '../interfaces';
 
 // markup
 const IndexPage = ({ location }) => {
@@ -182,12 +183,20 @@ const IndexPage = ({ location }) => {
         `,
     );
 
-    const results = useFlexSearch(keyword, index, store).reduce((acc, cur) => {
-        if (!acc.some((data) => data.pageid === cur.pageid)) {
-            acc.push(cur);
-        }
-        return acc;
-    }, []);
+    const results = useFlexSearch(keyword, index, store)
+        .reduce((acc, cur) => {
+            if (!acc.some((data) => data.pageid === cur.pageid)) {
+                acc.push(cur);
+            }
+            return acc;
+        }, [])
+        .filter((eachFlex: SearchQueryResult) => {
+            const index = edges.findIndex(
+                (each: { node: { pageAttributes: { pageid: string } } }) =>
+                    each?.node?.pageAttributes?.pageid === eachFlex.pageid,
+            );
+            return index >= 0;
+        });
 
     const optionSelected = (pageid: string) => {
         updateKeyword('');
@@ -202,7 +211,9 @@ const IndexPage = ({ location }) => {
             <main
                 ref={ref as React.RefObject<HTMLDivElement>}
                 className={isPublicSiteOpen ? 'withHeaderFooter' : ''}
-                style={{ height: !docContent && MAIN_HEIGHT_WITHOUT_DOC_CONTENT }}
+                style={{
+                    height: !docContent && MAIN_HEIGHT_WITHOUT_DOC_CONTENT,
+                }}
             >
                 <LeftSidebar
                     navTitle={navTitle}
