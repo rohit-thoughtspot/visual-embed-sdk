@@ -31,6 +31,7 @@ import {
     MAIN_HEIGHT_WITHOUT_DOC_CONTENT,
 } from '../constants/uiConstants';
 import { SearchQueryResult } from '../interfaces';
+import { getAllPageIds } from '../utils/helper-utils';
 
 // markup
 const IndexPage = ({ location }) => {
@@ -183,6 +184,8 @@ const IndexPage = ({ location }) => {
         `,
     );
 
+    const allPageIds = getAllPageIds(navContent);
+
     const results = useFlexSearch(keyword, index, store)
         .reduce((acc, cur) => {
             if (!acc.some((data) => data.pageid === cur.pageid)) {
@@ -191,9 +194,8 @@ const IndexPage = ({ location }) => {
             return acc;
         }, [])
         .filter((eachFlex: SearchQueryResult) => {
-            const index = edges.findIndex(
-                (each: { node: { pageAttributes: { pageid: string } } }) =>
-                    each?.node?.pageAttributes?.pageid === eachFlex.pageid,
+            const index = allPageIds.findIndex(
+                (id: string) => id === eachFlex.pageid,
             );
             return index >= 0;
         });
