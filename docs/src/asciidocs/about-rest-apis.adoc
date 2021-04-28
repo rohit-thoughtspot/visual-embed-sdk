@@ -57,6 +57,7 @@ You can use the xref:user-api.adoc[user APIs] to manage ThoughtSpot users.
 |`*POST* /tspublic/v1/user/updatepassword`|Change the password of a user account.
 |`*POST* /tspublic/v1/user/transfer/ownership`|Transfer ownership of all objects from one user to another.
 |`*POST* /tspublic/v1/user/sync`|Synchronize principal from your client application with ThoughtSpot.
+|`*POST* /tspublic/v1/user/updatepreference`|Modify a user profile.
 |====
 
 === User group management
@@ -98,9 +99,10 @@ You can use the data APIs to query and embed data from the ThoughtSpot applicati
 |Data API|Request URL|Description|
 xref:pinboarddata.adoc[Pinboard Data]|`*POST* /tspublic/v1/pinboarddata`|Fetch the pinboard data from the ThoughtSpot application.
 |xref:pinboard-export-api.adoc[Pinboard export]| `*POST* /tspublic/v1/export/pinboard/pdf`|Download a pinboard or specific visualizations from a pinboard as a PDF file.
-.2+|xref:metadata-api.adoc[Metadata]|
+.3+|xref:metadata-api.adoc[Metadata]|
 `*GET* /tspublic/v1/metadata/listobjectheaders`|List the metadata object headers in the repository
 |`*GET* /tspublic/v1/metadata/listvizheaders`|Get the visualization headers from the ThoughtSpot system.
+|`*GET* /tspublic/v1/metadata/listas`| Get a list of metadata objects for a user or user group.
 |xref:search-data-api.adoc[Search data] |`*POST* /tspublic/v1/searchdata`|Search data from a specific data source in the ThoughtSpot application.
 
 |====

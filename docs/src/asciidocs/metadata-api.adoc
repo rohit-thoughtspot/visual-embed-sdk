@@ -9,6 +9,7 @@ The metadata API service allows you to fetch metadata details for various object
 
 For example, you may want to see the visualization headers of a particular visualization or a pinboard.
 
+---
 == Get visualization headers
 
 Use this API to get a list of visualization headers from the ThoughtSpot system.
@@ -81,6 +82,8 @@ https://<ThoughtSpot-host>/callosum/v1/tspublic/v1/metadata/listvizheaders?id=97
 |**200**|Successful retrieval of the visualization headers list
 |**400**|Invalid pinboard GUID
 |===
+
+---
 == Get object headers
 
 Use this API to fetch a comprehensive list of metadata headers of a specific object type in the Thoughtspot system.
@@ -133,10 +136,10 @@ Note: This parameter only applies to the `LOGICAL_TABLE`.
 
 * To set an ascending order, specify `true`.
 * To set a descending order, specify `false`.
-|`offset`|integer|The batch offset to fetch the page headers. The system default is  `-1` that implies the first page.
+|`offset`|integer|The batch offset to fetch the page headers. The system default is  `-1`, which  implies the first page.
 |`batchsize`|integer|The batch size of the object. A value of `-1` implies no pagination.
 |`tagname`|string|A JSON array containing a set of tag names to filter headers by.
-|`pattern`|string|A pattern to match for object name. Use `%`for wildcard match.
+|`pattern`|string|A pattern to match object name. Use `%`for wildcard match.
 |`skipids`|string|IDs of metadata objects to exclude.
 |`fetchids`|string|IDs of metadata objects to fetch.
 |`auto_created`| boolean|A flag that indicates whether to list only the auto-created objects. A value of null returns all objects.
@@ -202,6 +205,109 @@ https://<ThoughtSpot-host>/callosum/v1/tspublic/v1/metadata/listobjectheaders?ty
 |HTTP Code|Description
 |**200**|Successful retrieval of metadata headers
 |===
+
+---
+== Get metadata objects for a user or user group
+
+Use the `listas` metadata API to get a list of metadata objects available for a user or user group. 
+
+=== Resource URL
+----
+GET /tspublic/v1/metadata/listas
+----
+=== Request parameters
+[width="100%" cols="1,2,3"]
+[options='header']
+|====
+|Query Parameter|Data Type|Description
+|`offset`|integer| The batch offset value that indicates the first item to return in a page of headers. The system default is -1, which implies first page.
+|`batchsize`|integer|The batch size of the objects. A value of `-1` implies no pagination.
+|`pattern`|string|The pattern to match object names. Use `%` for a wildcard match.
+|`principalid`|string|ID of the user or user group.
+|`minimumaccesslevel`|string a| Minimum access level that the specified user or user group has. 
+Valid values are:
+
+* `NO_ACCESS`
+* `READ_ONLY` 
+* `MODIFY`
+|`type`|string|Type of principal. The allowed values are `USER` and `USER_GROUP`.
+|====
+ 
+=== Example request
+
+.cURL
+[source, cURL]
+----
+curl -X GET --header 'Accept: application/json' --header 'X-Requested-By: ThoughtSpot' 'https://<ThoughtSpot-host>/callosum/v1/tspublic/v1/metadata/listas?offset=-1&pattern=%25&principalid=13bb9aec-aad0-4075-adb9-bd0569351393&minimumaccesslevel=READ_ONLY&type=USER'
+----
+
+.Request URL
+----
+https://<ThoughtSpot-host>/callosum/v1/tspublic/v1/metadata/listas?offset=-1&pattern=%25&principalid=13bb9aec-aad0-4075-adb9-bd0569351393&minimumaccesslevel=READ_ONLY&type=USER
+----
+
+=== Example response
+
+[source,JSON]
+----
+{
+  "headers": [
+    {
+      "id": "9d789a9e-12a7-4b00-91de-e558b590d192",
+      "indexVersion": 1217,
+      "generationNum": 1217,
+      "name": "test table 2",
+      "author": "59481331-ee53-42be-a548-bd87be6ddd4a",
+      "authorName": "tsadmin",
+      "authorDisplayName": "Administrator",
+      "created": 1618463063893,
+      "modified": 1618463113058,
+      "modifiedBy": "59481331-ee53-42be-a548-bd87be6ddd4a",
+      "owner": "9d789a9e-12a7-4b00-91de-e558b590d192",
+      "isDeleted": false,
+      "isHidden": false,
+      "isAutoCreated": false,
+      "isAutoDelete": false,
+      "tags": [],
+      "isExternal": false,
+      "isDeprecated": false
+    },
+    {
+      "id": "eea322db-2b8c-4bb7-922d-a80807a0ba94",
+      "indexVersion": 5,
+      "generationNum": 691,
+      "name": "Stats and Trends for Search on Answers",
+      "author": "67e15c06-d153-4924-a4cd-ff615393b60f",
+      "authorName": "system",
+      "authorDisplayName": "System User",
+      "created": 1604579772176,
+      "modified": 1616410151703,
+      "modifiedBy": "67e15c06-d153-4924-a4cd-ff615393b60f",
+      "owner": "eea322db-2b8c-4bb7-922d-a80807a0ba94",
+      "isDeleted": false,
+      "isHidden": false,
+      "isAutoCreated": false,
+      "isAutoDelete": false,
+      "tags": [],
+      "isExternal": false,
+      "isDeprecated": false
+    }
+  ],
+  "isLastBatch": true,
+  "debugInfo": {}
+}
+
+----
+
+=== Response codes
+
+[options="header", cols=".^2a,.^14a"]
+|===
+|HTTP Code|Description
+|**200**|Successful retrieval of the metadata headers
+|===
+
+
 ////
 ## Error Codes
 <table>
