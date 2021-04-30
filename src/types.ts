@@ -403,3 +403,15 @@ export enum Action {
     Separator = 'context-menu-item-separator',
     DrillDown = 'DRILL',
 }
+export interface SessionInterface {
+    sessionId: string;
+    genNo: number;
+    acSession: { sessionId: string; genNo: number };
+}
+
+export const DisplayMode = {
+    TableMode: 'TABLE_MODE',
+    ChartMode: 'CHART_MODE',
+    RAnalysisMode: 'R_ANALYSIS_MODE',
+    Undefined: 'UNDEFINED',
+};
