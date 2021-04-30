@@ -2,7 +2,7 @@ import { FetchAnswers } from './fetchAnswer';
 
 const session = {
     sessionId: '',
-    genNo: 1,
+    genNo: 2,
     acSession: { sessionId: '', genNo: 1 },
 };
 
