@@ -31,6 +31,7 @@ import {
     uploadMixpanelEvent,
     MIXPANEL_EVENT,
 } from '../mixpanel-service';
+import { FetchAnswers } from '../answer/fetchAnswer';
 
 let config = {} as EmbedConfig;
 
@@ -231,7 +232,18 @@ export class TsEmbed {
         window.addEventListener('message', (event) => {
             const eventType = this.getEventType(event);
             if (event.source === this.iFrame.contentWindow) {
-                this.executeCallbacks(eventType, event.data);
+                const newEvent = event;
+                const { displayMode, operationName, session } = event.data.data;
+                const fetchAnswer = new FetchAnswers(
+                    session,
+                    displayMode,
+                    operationName,
+                    this.thoughtSpotHost,
+                );
+                newEvent.data.fetchData = fetchAnswer.getAnswer.bind(
+                    fetchAnswer,
+                );
+                this.executeCallbacks(eventType, newEvent.data);
             }
         });
     }
