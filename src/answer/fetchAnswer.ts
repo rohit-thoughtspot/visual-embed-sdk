@@ -32,7 +32,6 @@ export class FetchAnswers {
 
     public getAnswer(offset: number, batchSize: number): any {
         let variable: any;
-        let query: string;
         if (this.displayType === DisplayMode.ChartMode) {
             variable = { batchSize, offset };
         } else {
